@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>User login/logout</title>
+  </head>
+  <body>
+    {% if user %}
+    <p>{{ welcome }} {{ user.email() }} welcome to the application</p>
+    {% else %}
+    <p>Hello guest welcome to the application</p>
+    {% endif %}
+    <p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+  </body>
+</html>
