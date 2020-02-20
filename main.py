@@ -37,6 +37,7 @@ class MainPage(webapp2.RequestHandler):
             url = users.create_login_url(self.request.uri)
             url_string = 'login'
 
+
         template_values = {
             'url' : url,
             'url_string' : url_string,
