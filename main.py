@@ -5,6 +5,7 @@ from google.appengine.ext import ndb
 import os
 
 from myuser import MyUser
+from addev import AddEv
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -19,6 +20,7 @@ class MainPage(webapp2.RequestHandler):
         url = ''
         url_string = ''
         welcome = 'Welcome back'
+        myuser = None
 
         user = users.get_current_user()
 
@@ -37,12 +39,12 @@ class MainPage(webapp2.RequestHandler):
             url = users.create_login_url(self.request.uri)
             url_string = 'login'
 
-
         template_values = {
             'url' : url,
             'url_string' : url_string,
             'user' : user,
-            'welcome' : welcome
+            'welcome' : welcome,
+            'myuser' : myuser
         }
 
         template = JINJA_ENVIRONMENT.get_template('main.html')
@@ -51,4 +53,5 @@ class MainPage(webapp2.RequestHandler):
 # starts the web application and specify the full routing table here as well
 app = webapp2.WSGIApplication([
     ('/', MainPage),
+    ('/addev', AddEv),
 ], debug=True)

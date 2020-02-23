@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add EV</title>
+</head>
+<body>
+
+    Add EV below <br/>
+
+    <form method="post" action="/addev">
+        Name:<input type="text" name="ev_name">
+        <br/>
+        Manufacturer:<input type="text" name="ev_manufacturer">
+        <br/>
+        Year:<input type="number" step="any" name="ev_year">
+        <br/>
+        Battery size:<input type="number" step="any" name="ev_battery_size">
+        <br/>
+        WLTP Range:<input type="number" step="any" name="ev_WLTP_Range">
+        <br/>
+        Cost:<input type="number" step="any" name="ev_cost">
+        <br/>
+        Power:<input type="number" step="any" name="ev_power">
+        <br/>
+        <input type="submit" value="Add" name="button"/>
+    </form>
+    <form method="post" action="/add">
+        <input type="submit" value="Cancel" name="button"/>
+    </form>
+
+</body>
+</html>

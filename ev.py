@@ -1,7 +1,7 @@
 from google.appengine.ext import ndb
 
 class EV(ndb.Model):
-    # attributes of an ev
+    # A model for representing an individual an ev
     name = ndb.StringProperty()
     manufacturer = ndb.StringProperty()
     year = ndb.IntegerProperty()
