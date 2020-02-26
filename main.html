@@ -1,20 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <title>User login/logout</title>
   </head>
   <body>
+
     {% if user %}
     <p>{{ welcome }} {{ user.email() }} welcome to the application</p>
 
-    <br>
     To add an EV <a href="/addev">click here</a>
     <br>
 
     {% else %}
     <p>Hello guest welcome to the application</p>
     {% endif %}
+    <p>To search an EV</p>
+    <!-- Year: <input type="checkbox" id="myCheck"  onclick="myFunction()"> -->
+    <form method="post" action="/">
+      <fieldset>
+        Name:<input type="text" name="ev_name">
+        Manufacturer:<input type="text" name="ev_manufacturer">
+        <!-- id="year" style="display:none" -->
+        Year:<input type="number" step="any" name="ev_year">
+        Battery size:<input type="number" step="any" name="ev_battery_size">
+        WLTP Range:<input type="number" step="any" name="ev_WLTP_Range">
+        Cost:<input type="number" step="any" name="ev_cost">
+        Power:<input type="number" step="any" name="ev_power">
+        <input type="submit" value="Search" name="button"/>
+      </fieldset>
+
+      {% for i in q %}
+      <br>
+      EV Name: <a href="/details?name={{ i.name}}&manufacturer={{ i.manufacturer}}&year={{ i.year }}">{{ i.name }}</a><br>
+      {% endfor %}
+    </form>
     <p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+
+</script>
   </body>
 </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>EV Details</title>
+  </head>
+  <body>
+
+    <form action="/edit" method="post">
+
+    </form>
+    {% for i in query %}
+    Name: {{ i.name }} <br>
+    Manufacturer: {{ i.manufacturer }} <br>
+    Year: {{ i.year }} <br>
+    Battery Size: {{ i.battery_size }} <br>
+    WLTP Range: {{ i.WLTP_range }} <br>
+    Cost: {{ i.cost }} <br>
+    Power: {{ i.power }} <br>
+    {% endfor %}
+
+    {% if user %}
+    <input type="button" name="Edit" value="Edit">
+    <input type="button" name="Delete" value="Delete">
+    {% endif %}
+
+  </body>
+</html>

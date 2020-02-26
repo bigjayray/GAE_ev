@@ -22,6 +22,8 @@ class AddEv(webapp2.RequestHandler):
         myuser_key = ndb.Key('MyUser', user.user_id())
         myuser = myuser_key.get()
 
+        # error = ''
+
         # evs_key = ndb.Key('EV', 'default')
         # evs = key.get()
         # if evs == None:
@@ -30,7 +32,7 @@ class AddEv(webapp2.RequestHandler):
 
         template_values = {
             'myuser': myuser,
-            # 'evs' : evs
+            # 'error' : error
         }
 
         template = JINJA_ENVIRONMENT.get_template('addev.html')
@@ -42,9 +44,12 @@ class AddEv(webapp2.RequestHandler):
         # evs_key = ndb.Key('EV', 'default')
         # evs = key.get()
 
+
         ev = EV()
 
+
         if action == 'Add':
+
 
             ev.name = self.request.get('ev_name')
             ev.manufacturer = self.request.get('ev_manufacturer')
@@ -61,10 +66,12 @@ class AddEv(webapp2.RequestHandler):
             query = EV.query(ndb.AND(EV.manufacturer == ev.manufacturer, EV.name == ev.name, EV.year == ev.year))
 
             for i in query:
-                result = True;
+                result = True
 
             if result:
-                self.response.out.write("EV already entered into datastore")
+                # error = 'EV already entered into datastore'
+                self.redirect('/addev')
+
             else:
                 ev.put()
                 self.redirect('/')

@@ -6,26 +6,30 @@
 </head>
 <body>
 
+  <p>{{ error }}</p>
+
     Add EV below <br/>
 
     <form method="post" action="/addev">
-        Name:<input type="text" name="ev_name">
+      <fieldset>
+        Name:<input type="text" name="ev_name" required>
         <br/>
-        Manufacturer:<input type="text" name="ev_manufacturer">
+        Manufacturer:<input type="text" name="ev_manufacturer" required>
         <br/>
-        Year:<input type="number" step="any" name="ev_year">
+        Year:<input type="number" step="any" name="ev_year" required>
         <br/>
-        Battery size:<input type="number" step="any" name="ev_battery_size">
+        Battery size:<input type="number" step="any" name="ev_battery_size" required>
         <br/>
-        WLTP Range:<input type="number" step="any" name="ev_WLTP_Range">
+        WLTP Range:<input type="number" step="any" name="ev_WLTP_Range" required>
         <br/>
-        Cost:<input type="number" step="any" name="ev_cost">
+        Cost:<input type="number" step="any" name="ev_cost" required>
         <br/>
-        Power:<input type="number" step="any" name="ev_power">
+        Power:<input type="number" step="any" name="ev_power" required>
         <br/>
         <input type="submit" value="Add" name="button"/>
+      </fieldset>
     </form>
-    <form method="post" action="/add">
+    <form method="post" action="/addev">
         <input type="submit" value="Cancel" name="button"/>
     </form>
 
