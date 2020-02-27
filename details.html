@@ -5,24 +5,35 @@
     <title>EV Details</title>
   </head>
   <body>
+    <form method="post" action="/details">
+      {% for i in query %}
+        Name: <input type="text" name="ev_name" value="{{ i.name }}"/>
+        <br/>
+        Manufacturer: <input type="text" name="ev_manufacturer" value="{{ i.manufacturer }}"/>
+        <br/>
+        Year: <input type="number" name="ev_year" value="{{ i.year }}">
+        <br/>
+        Battery Size: <input type="number" step="any" name="ev_battery_size" value="{{ i.battery_size }}">
+        <br/>
+        WLTP Range: <input type="number" step="any" name="ev_WLTP_range" value="{{ i.WLTP_range }}">
+        <br/>
+        Cost: <input type="number" step="any" name="ev_cost" value="{{ i.cost }}">
+        <br/>
+        Power: <input type="number" step="any" name="ev_power" value="{{ i.power }}">
 
-    <form action="/edit" method="post">
+        <input type="text" name="name" value="{{ i.name }}" hidden/>
+        <input type="text" name="manufacturer" value="{{ i.manufacturer }}" hidden/>
+        <input type="number" name="year" value="{{ i.year }}" hidden/>
 
+        <br/>
+        {% if user %}
+        <form method="post" action="/details">
+            <input type="submit" value="Edit" name="button"/>
+            <input type="submit" value="Delete" name="button"/>
+        </form>
+        {% endif %}
+      {% endfor %}
     </form>
-    {% for i in query %}
-    Name: {{ i.name }} <br>
-    Manufacturer: {{ i.manufacturer }} <br>
-    Year: {{ i.year }} <br>
-    Battery Size: {{ i.battery_size }} <br>
-    WLTP Range: {{ i.WLTP_range }} <br>
-    Cost: {{ i.cost }} <br>
-    Power: {{ i.power }} <br>
-    {% endfor %}
-
-    {% if user %}
-    <input type="button" name="Edit" value="Edit">
-    <input type="button" name="Delete" value="Delete">
-    {% endif %}
 
   </body>
 </html>

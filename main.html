@@ -32,7 +32,8 @@
 
       {% for i in q %}
       <br>
-      EV Name: <a href="/details?name={{ i.name}}&manufacturer={{ i.manufacturer}}&year={{ i.year }}">{{ i.name }}</a><br>
+      EV{{ loop.index }}
+      Name: <a href="/details?name={{ i.name}}&manufacturer={{ i.manufacturer}}&year={{ i.year }}">{{ i.name }}</a><br>
       {% endfor %}
     </form>
     <p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
