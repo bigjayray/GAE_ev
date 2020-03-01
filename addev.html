@@ -1,35 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Add EV</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <title>Add EV</title>
 </head>
 <body>
+  <div class="container-fluid">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">EV</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/search">Search EV</a>
+            <a class="nav-item nav-link" href="/addev">Add EV</a>
+            <a class="nav-item nav-link" href="/compare">Compare EV</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <form method="post" action="/addev" class="form">
+        <fieldset>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Name:</label>
+              <input type="text" name="ev_name" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Manufacturer:</label>
+              <input type="text" name="ev_manufacturer" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Year:</label>
+              <input type="number" step="any" name="ev_year" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Battery size:</label>
+              <input type="number" step="any" name="ev_battery_size" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>WLTP Range:</label>
+              <input type="number" step="any" name="ev_WLTP_Range" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Cost:</label>
+              <input type="number" step="any" name="ev_cost" class="form-control" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Power:</label>
+              <input type="number" step="any" name="ev_power"  class="form-control"required>
+            </div>
+          </div>
+          <input type="submit" value="Add" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
+        </fieldset>
+      </form>
+      <form action="/addev" method="post">
+        <input type="submit" value="Cancel" name="button" class="btn btn-outline-dark btn-lg btn-block mt-2"/>
+      </form>
+    </main>
+  </div>
 
-  <p>{{ error }}</p>
-
-    Add EV below <br/>
-
-    <form method="post" action="/addev">
-      <fieldset>
-        Name:<input type="text" name="ev_name" required>
-        <br/>
-        Manufacturer:<input type="text" name="ev_manufacturer" required>
-        <br/>
-        Year:<input type="number" step="any" name="ev_year" required>
-        <br/>
-        Battery size:<input type="number" step="any" name="ev_battery_size" required>
-        <br/>
-        WLTP Range:<input type="number" step="any" name="ev_WLTP_Range" required>
-        <br/>
-        Cost:<input type="number" step="any" name="ev_cost" required>
-        <br/>
-        Power:<input type="number" step="any" name="ev_power" required>
-        <br/>
-        <input type="submit" value="Add" name="button"/>
-        <input type="submit" value="Cancel" name="button"/>
-      </fieldset>
-    </form>
+  <!-- JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 </body>
 </html>

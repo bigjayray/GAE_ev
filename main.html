@@ -1,43 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <title>User login/logout</title>
   </head>
   <body>
+    <div class="container-fluid">
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="/">EV</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="/search">Search EV</a>
+              <a class="nav-item nav-link" href="/addev">Add EV</a>
+              <a class="nav-item nav-link" href="/compare">Compare EV</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <div class="jumbotron">
+          <h1 class="display-4">Hello!</h1>
+          <p class="lead">This is a simple PaaS application used to interact with a database of Electric Vehicles</p>
+          <hr class="my-4">
+          {% if user %}
+          <p>{{ welcome }} {{ user.email() }} to the application</p>
 
-    {% if user %}
-    <p>{{ welcome }} {{ user.email() }} welcome to the application</p>
+          <p>To add an EV <a href="/addev">click here</a></p>
 
-    To add an EV <a href="/addev">click here</a>
-    <br>
+          {% else %}
+          <p>Hello guest welcome to the application</p>
+          {% endif %}
 
-    {% else %}
-    <p>Hello guest welcome to the application</p>
-    {% endif %}
-    <p>To search an EV</p>
-    <!-- Year: <input type="checkbox" id="myCheck"  onclick="myFunction()"> -->
-    <form method="post" action="/">
-      <fieldset>
-        Name:<input type="text" name="ev_name">
-        Manufacturer:<input type="text" name="ev_manufacturer">
-        <!-- id="year" style="display:none" -->
-        Year:<input type="number" step="any" name="ev_year">
-        Battery size:<input type="number" step="any" name="ev_battery_size">
-        WLTP Range:<input type="number" step="any" name="ev_WLTP_Range">
-        Cost:<input type="number" step="any" name="ev_cost">
-        Power:<input type="number" step="any" name="ev_power">
-        <input type="submit" value="Search" name="button"/>
-      </fieldset>
-
-      {% for i in q %}
-      <br>
-      EV{{ loop.index }}
-      Name: <a href="/details?name={{ i.name}}&manufacturer={{ i.manufacturer}}&year={{ i.year }}">{{ i.name }}</a><br>
-      {% endfor %}
-    </form>
-    <p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
-
-</script>
+          <p>To search for an EV  <a href="/search">click here</a></p>
+        </div>
+        <p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+      </main>
+    </div>
+    <!-- JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 </html>

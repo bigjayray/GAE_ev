@@ -19,21 +19,16 @@ class AddEv(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'text/html'
 
         user = users.get_current_user()
-        myuser_key = ndb.Key('MyUser', user.user_id())
-        myuser = myuser_key.get()
 
-        # evs_key = ndb.Key('EV', 'default')
-        # evs = key.get()
-        # if evs == None:
-        #     evs = EV(id='default')
-        #     evs.put()
+        if user:
+            template_values = {
+                'user': user
+            }
 
-        template_values = {
-            'myuser': myuser,
-        }
-
-        template = JINJA_ENVIRONMENT.get_template('addev.html')
-        self.response.write(template.render(template_values))
+            template = JINJA_ENVIRONMENT.get_template('addev.html')
+            self.response.write(template.render(template_values))
+        else:
+            self.redirect('/')
 
     def post(self):
         self.response.headers['Content-Type'] = 'text/html'

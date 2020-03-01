@@ -84,3 +84,5 @@ class Details(webapp2.RequestHandler):
                 for ev in query:
                     ev.key.delete()
             self.redirect('/')
+        elif action == 'Cancel':
+            self.redirect('/')
