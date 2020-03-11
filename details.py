@@ -26,12 +26,12 @@ class Details(webapp2.RequestHandler):
         ev = key.get()
         count = 0;
         sum = 0;
+        average = 0;
         if ev.reviews:
             for i in ev.reviews:
                 sum += i.rating
                 count += 1
-        average = sum/count
-        print(average)
+            average = sum/count
 
         template_values = {
             'user': user,
