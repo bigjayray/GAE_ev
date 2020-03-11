@@ -101,19 +101,3 @@ class Search(webapp2.RequestHandler):
             self.response.write(template.render(template_values))
         elif action == 'Cancel':
             self.redirect('/')
-
-                    # if year_upper or year_lower:
-                    #     query2 = EV.query(ndb.AND(EV.year <= int(year_upper), EV.year >= int(year_lower))).fetch(keys_only=True)
-                    #     query1 = ndb.get_multi(set(query1).intersection(query2))
-                    # if battery_size_upper or battery_size_lower:
-                    #     query2 = EV.query(ndb.AND(EV.battery_size <= battery_size_upper, EV.battery_size >= battery_size_lower)).fetch(keys_only=True)
-                    #     query1 = ndb.get_multi(set(query1).intersection(query2))
-                    # if WLTP_range_upper or WLTP_range_lower:
-                    #     query2 = EV.query(ndb.AND(EV.WLTP_range <= WLTP_range_upper, EV.WLTP_range >= WLTP_range_lower)).fetch(keys_only=True)
-                    #     query1 = ndb.get_multi(set(query1).intersection(query2))
-                    # if cost_upper or cost_lower:
-                    #     query2 = EV.query(ndb.AND(EV.cost <= cost_upper, EV.cost >= cost_lower)).fetch(keys_only=True)
-                    #     query1 = ndb.get_multi(set(query1).intersection(query2))
-                    # if power_upper or power_lower:
-                    #     query2 = EV.query(ndb.AND(EV.power <= power_upper, EV.power >= power_lower)).fetch(keys_only=True)
-                    #     query1 = ndb.get_multi(set(query1).intersection(query2))

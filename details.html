@@ -66,8 +66,9 @@
             {% if ev.reviews %}
             <h4 class="col-md-12">Comments</h4>
             {% for i in ev.reviews %}
-              <p class="col-md-12">{{ i.comment }}</p>
+              <p class="col-md-12">{{ loop.index }}. {{ i.comment }}</p>
             {% endfor %}
+            <p class="h5">Average Rating: {{ average }}</p>
             {% endif %}
             {% if user %}
             <input type="submit" value="Edit" name="button" class="btn btn-outline-dark btn-lg btn-block"/>

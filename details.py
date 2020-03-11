@@ -24,10 +24,19 @@ class Details(webapp2.RequestHandler):
 
         key = ndb.Key('EV', int(id))
         ev = key.get()
+        count = 0;
+        sum = 0;
+        if ev.reviews:
+            for i in ev.reviews:
+                sum += i.rating
+                count += 1
+        average = sum/count
+        print(average)
 
         template_values = {
             'user': user,
-            'ev' : ev
+            'ev' : ev,
+            'average' : average
         }
 
         template = JINJA_ENVIRONMENT.get_template('details.html')
@@ -59,7 +68,7 @@ class Details(webapp2.RequestHandler):
             id = self.request.get('id')
             key = ndb.Key('EV', int(id))
             ev = key.get()
-            
+
             ev.key.delete()
 
         elif action == 'Cancel':
