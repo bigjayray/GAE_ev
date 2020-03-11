@@ -21,13 +21,17 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="/search">Search EV</a>
+              {% if user %}
               <a class="nav-item nav-link" href="/addev">Add EV</a>
               <a class="nav-item nav-link" href="/compare">Compare EV</a>
+              <a class="nav-item nav-link" href="/reviews">Review EV</a>
+              {% endif %}
             </div>
           </div>
         </nav>
       </header>
       <main>
+        <h2>Search EVs</h2>
         <form method="post" action="/search" class="form">
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -38,35 +42,42 @@
               <label>Manufacturer:</label>
               <input type="text" name="ev_manufacturer" class="form-control">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label>Year:</label>
-              <input type="number" step="any" name="ev_year" class="form-control">
+              <input type="number" step="any" name="ev_year_upper" class="form-control" placeholder="Upper Limit">
+              <input type="number" step="any" name="ev_year_lower" class="form-control" placeholder="Lower Limit">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label>Battery size:</label>
-              <input type="number" step="any" name="ev_battery_size" class="form-control">
+              <input type="number" step="any" name="ev_battery_size_upper" class="form-control" placeholder="Upper Limit">
+              <input type="number" step="any" name="ev_battery_size_lower" class="form-control" placeholder="Lower Limit">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label>WLTP Range:</label>
-              <input type="number" step="any" name="ev_WLTP_Range" class="form-control">
+              <input type="number" step="any" name="ev_WLTP_Range_upper" class="form-control" placeholder="Upper Limit">
+              <input type="number" step="any" name="ev_WLTP_Range_lower" class="form-control" placeholder="Lower Limit">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label>Cost:</label>
-              <input type="number" step="any" name="ev_cost" class="form-control">
+              <input type="number" step="any" name="ev_cost_upper" class="form-control" placeholder="Upper Limit">
+              <input type="number" step="any" name="ev_cost_lower" class="form-control" placeholder="Lower Limit">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label>Power:</label>
-              <input type="number" step="any" name="ev_power" class="form-control">
+              <input type="number" step="any" name="ev_power_upper" class="form-control" placeholder="Upper Limit">
+              <input type="number" step="any" name="ev_power_lower" class="form-control" placeholder="Lower Limit">
             </div>
+            <input type="submit" value="Search" name="button" class="btn btn-outline-dark col-md-6"/>
+            <input type="submit" value="Cancel" name="button" class="btn btn-outline-dark col-md-6"/>
           </div>
 
-          <input type="submit" value="Search" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
-          <input type="submit" value="Cancel" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
         </form>
-
-        {% for i in q %}
-        <p>EV{{ loop.index }}: <a href="/details?name={{ i.name}}&manufacturer={{ i.manufacturer}}&year={{ i.year }}">{{ i.manufacturer }} {{ i.name }}</a></p>
+        {% if total_query %}
+        <h4 class="mt-2">Search Results:</h4>
+        {% for i in total_query %}
+        <p>EV{{ loop.index }}: <a href="/details?id={{ i.key.id() }}">{{ i.manufacturer }} {{ i.name }}</a></p>
         {% endfor %}
+        {% endif %}
       </main>
     </div>
     <!-- JavaScript -->

@@ -20,15 +20,14 @@ class Details(webapp2.RequestHandler):
 
         user = users.get_current_user()
 
-        name = self.request.get('name')
-        manufacturer = self.request.get('manufacturer')
-        year = int(self.request.get('year'))
+        id = self.request.get('id')
 
-        query = EV.query(ndb.AND(EV.manufacturer == manufacturer, EV.name == name, EV.year == year))
+        key = ndb.Key('EV', int(id))
+        ev = key.get()
 
         template_values = {
             'user': user,
-            'query' : query
+            'ev' : ev
         }
 
         template = JINJA_ENVIRONMENT.get_template('details.html')
@@ -40,49 +39,28 @@ class Details(webapp2.RequestHandler):
 
         if action == 'Edit':
 
-            q_name = self.request.get('name')
-            q_manufacturer = self.request.get('manufacturer')
-            q_year = int(self.request.get('year'))
+            id = self.request.get('id')
+            key = ndb.Key('EV', int(id))
+            ev = key.get()
 
-            name = self.request.get('ev_name')
-            manufacturer = self.request.get('ev_manufacturer')
-            year = int(self.request.get('ev_year'))
-            battery_size = float(self.request.get('ev_battery_size'))
-            WLTP_range = float(self.request.get('ev_WLTP_range'))
-            cost = float(self.request.get('ev_cost'))
-            power = float(self.request.get('ev_power'))
+            ev.name = self.request.get('ev_name')
+            ev.manufacturer = self.request.get('ev_manufacturer')
+            ev.year = int(self.request.get('ev_year'))
+            ev.battery_size = float(self.request.get('ev_battery_size'))
+            ev.WLTP_range = float(self.request.get('ev_WLTP_range'))
+            ev.cost = float(self.request.get('ev_cost'))
+            ev.power = float(self.request.get('ev_power'))
 
-            query = EV.query(ndb.AND(EV.manufacturer == q_manufacturer, EV.name == q_name, EV.year == q_year))
-
-            print(query.count())
-            if query.count(1) == 1:
-                for ev in query:
-                    ev.name = name
-                    ev.manufacturer = manufacturer
-                    ev.year = year
-                    ev.battery_size = battery_size
-                    ev.WLTP_range = WLTP_range
-                    ev.cost = cost
-                    ev.power = power
-                    ev.put()
-                    print('hello world')
-
-            # for i in query:
-            # ev = i
-
+            ev.put()
 
             self.redirect('/')
 
         elif action == 'Delete':
-            name = self.request.get('ev_name')
-            manufacturer = self.request.get('ev_manufacturer')
-            year = int(self.request.get('ev_year'))
+            id = self.request.get('id')
+            key = ndb.Key('EV', int(id))
+            ev = key.get()
+            
+            ev.key.delete()
 
-            query = EV.query(ndb.AND(EV.manufacturer == manufacturer, EV.name == name, EV.year == year))
-
-            if query.count(1) == 1:
-                for ev in query:
-                    ev.key.delete()
-            self.redirect('/')
         elif action == 'Cancel':
             self.redirect('/')

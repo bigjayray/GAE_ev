@@ -21,13 +21,17 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-item nav-link" href="/search">Search EV</a>
+            {% if user %}
             <a class="nav-item nav-link" href="/addev">Add EV</a>
             <a class="nav-item nav-link" href="/compare">Compare EV</a>
+            <a class="nav-item nav-link" href="/reviews">Review EV</a>
+            {% endif %}
           </div>
         </div>
       </nav>
     </header>
     <main>
+      <h2>Add an EV</h2>
       <form method="post" action="/addev" class="form">
         <fieldset>
           <div class="form-row">

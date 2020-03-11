@@ -10,6 +10,7 @@ from ev import EV
 from details import Details
 from search import Search
 from compare import Compare
+from reviews import Reviews
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -61,5 +62,6 @@ app = webapp2.WSGIApplication([
     ('/addev', AddEv),
     ('/details', Details),
     ('/search', Search),
-    ('/compare', Compare)
+    ('/compare', Compare),
+    ('/reviews', Reviews),
 ], debug=True)

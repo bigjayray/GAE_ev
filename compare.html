@@ -6,32 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
   <link rel="stylesheet" type="text/css" href="style.css">
 
   <title>Compare EVs</title>
-  <style media="screen">
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    border: 1px solid #ddd;
-  }
-
-  th, td {
-    text-align: center;
-    padding: 16px;
-  }
-
-  th:first-child, td:first-child {
-    text-align: left;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f2f2f2
-  }
-  </style>
 </head>
 <body>
   <div class="container-fluid">
@@ -44,96 +24,92 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-item nav-link" href="/search">Search EV</a>
+            {% if user %}
             <a class="nav-item nav-link" href="/addev">Add EV</a>
             <a class="nav-item nav-link" href="/compare">Compare EV</a>
+            <a class="nav-item nav-link" href="/reviews">Review EV</a>
+            {% endif %}
           </div>
         </div>
       </nav>
     </header>
     <main>
       <h2>Compare EVs</h2>
-
+      {% if error %}
+      <p class="text-danger">{{ error }}</p>
+      {% endif %}
       <form method="post" action="/compare">
-        <table>
-          <tr>
-            <th>Attributes</th>
-            <th>
-              <select name="ev_1">
-                {% for i in q %}
-                <option value="{{ i.key.id() }}">{{ i.manufacturer }} {{ i.name }}</option>
-                {% endfor %}
-              </select>
-            </th>
-            <th>
-              <select name="ev_2">
-                {% for i in q %}
-                <option value="{{ i.key.id() }}">{{ i.manufacturer }} {{ i.name }}</option>
-                {% endfor %}
-              </select>
-            </th>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td><a href="/details?">{{ ev1.name }}</a></td>
-            <td><a href="/details?">{{ ev2.name }}</a></td>
-          </tr>
-          <tr>
-            <td>Manufacturer</td>
-            <td>{{ ev1.manufacturer }}</td>
-            <td>{{ ev2.manufacturer }}</td>
-          </tr>
-          <tr>
-            <td>Year</td>
-            <td>{{ ev1.year }}</td>
-            <td>{{ ev2.year }}</td>
-          </tr>
-          <tr>
-            <td>Battery Size</td>
-            <td id="ev1_battery">{{ ev1.battery_size }}</td>
-            <td id="ev2_battery">{{ ev2.battery_size }}</td>
-          </tr>
-          <tr>
-            <td>WLTP Range</td>
-            <td>{{ ev1.WLTP_range }}</td>
-            <td>{{ ev2.WLTP_range }}</td>
-          </tr>
-          <tr>
-            <td>Cost</td>
-            <td>{{ ev1.cost }}</td>
-            <td>{{ ev2.power }}</td>
-          </tr>
-          <tr>
-            <td>Power</td>
-            <td>{{ ev1.cost }}</td>
-            <td>{{ ev2.power }}</td>
-          </tr>
-        </table>
-        <br>
-
-        <input type="submit" value="Compare" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
-        <input type="submit" value="Cancel" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
+        <select class="selectpicker" multiple data-live-search="true" name="evs" required>
+          {% for i in q %}
+          <option value="{{ i.key.id() }}">{{ i.manufacturer }} {{ i.name }} {{ i.year }}</option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Compare" name="button" class="btn btn-outline-dark"/>
       </form>
+      {% if EVs %}
+      <table class="table table-hover mt-2">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">EVs</th>
+            <th scope="col">Name</th>
+            <th scope="col">Manufacturer</th>
+            <th scope="col">Year</th>
+            <th scope="col">Battery Size</th>
+            <th scope="col">WLTP Range</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Power</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ev in EVs %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ ev.name }}</td>
+            <td>{{ ev.manufacturer }}</td>
+            <td>{{ ev.year }}</td>
+            {% if ev.battery_size == max_battery_size %}
+            <td class="text-success">{{ ev.battery_size }}</td>
+            {% elif ev.battery_size == min_battery_size %}
+            <td class="text-danger">{{ ev.battery_size }}</td>
+            {% else %}
+            <td>{{ ev.battery_size }}</td>
+            {% endif %}
+            {% if ev.WLTP_range == max_WLTP_range %}
+            <td class="text-success">{{ ev.WLTP_range }}</td>
+            {% elif ev.WLTP_range == min_WLTP_range %}
+            <td class="text-danger">{{ ev.WLTP_range }}</td>
+            {% else %}
+            <td>{{ ev.WLTP_range }}</td>
+            {% endif %}
+            {% if ev.cost == max_cost %}
+            <td class="text-danger">{{ ev.cost }}</td>
+            {% elif ev.cost == min_cost %}
+            <td class="text-success">{{ ev.cost }}</td>
+            {% else %}
+            <td>{{ ev.cost }}</td>
+            {% endif %}
+            {% if ev.power == max_power %}
+            <td class="text-success">{{ ev.power }}</td>
+            {% elif ev.power == min_power %}
+            <td class="text-danger">{{ ev.power }}</td>
+            {% else %}
+            <td>{{ ev.power }}</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
     </main>
   </div>
-  <!-- JavaScript -->
-  <!-- <script type="text/javascript">
-    var ev1_battery = document.getElementById("ev1_battery").value;
-    var ev2_battery = document.getElementById("ev2_battery").value;
-    if (ev1_battery > ev2_battery) {
-      document.getElementById("ev1_battery").style.color = "green";
-      document.getElementById("ev2_battery").style.color = "red";
-    } else {
-      document.getElementById("ev1_battery").style.color = "red";
-      document.getElementById("ev2_battery").style.color = "green";
-    }
-    // function color() {
+  <script type="text/javascript">
+  $('select').selectpicker();
+  </script>
 
-    // }
-  </script> -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
 </body>
 </html>

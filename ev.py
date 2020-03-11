@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from review import Review
 
 class EV(ndb.Model):
     # A model for representing an individual an ev
@@ -9,3 +10,4 @@ class EV(ndb.Model):
     WLTP_range = ndb.FloatProperty(required=True)
     cost = ndb.FloatProperty(required=True)
     power = ndb.FloatProperty(required=True)
+    reviews = ndb.StructuredProperty(Review, repeated=True)

@@ -21,58 +21,60 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="/search">Search EV</a>
+              {% if user %}
               <a class="nav-item nav-link" href="/addev">Add EV</a>
               <a class="nav-item nav-link" href="/compare">Compare EV</a>
+              <a class="nav-item nav-link" href="/reviews">Review EV</a>
+              {% endif %}
             </div>
           </div>
         </nav>
       </header>
       <main>
+        <h2>Details</h2>
         <form method="post" action="/details" class="form">
-          {% for i in query %}
           <div class="form-row">
             <div class="form-group col-md-6">
               <label>Name:</label>
-              <input type="text" name="ev_name" value="{{ i.name }}" class="form-control"/>
+              <input type="text" name="ev_name" value="{{ ev.name }}" class="form-control"/>
             </div>
             <div class="form-group col-md-6">
               <label>Manufacturer:</label>
-              <input type="text" name="ev_manufacturer" value="{{ i.manufacturer }}" class="form-control"/>
+              <input type="text" name="ev_manufacturer" value="{{ ev.manufacturer }}" class="form-control"/>
             </div>
             <div class="form-group col-md-6">
               <label>Year:</label>
-              <input type="number" name="ev_year" value="{{ i.year }}" class="form-control">
+              <input type="number" name="ev_year" value="{{ ev.year }}" class="form-control">
             </div>
             <div class="form-group col-md-6">
               <label>Battery Size:</label>
-              <input type="number" step="any" name="ev_battery_size" value="{{ i.battery_size }}" class="form-control">
+              <input type="number" step="any" name="ev_battery_size" value="{{ ev.battery_size }}" class="form-control">
             </div>
             <div class="form-group col-md-6">
               <label>WLTP Range:</label>
-              <input type="number" step="any" name="ev_WLTP_range" value="{{ i.WLTP_range }}" class="form-control">
+              <input type="number" step="any" name="ev_WLTP_range" value="{{ ev.WLTP_range }}" class="form-control">
             </div>
             <div class="form-group col-md-6">
               <label>Cost:</label>
-              <input type="number" step="any" name="ev_cost" value="{{ i.cost }}" class="form-control">
+              <input type="number" step="any" name="ev_cost" value="{{ ev.cost }}" class="form-control">
             </div>
             <div class="form-group col-md-6">
               <label>Power:</label>
-              <input type="number" step="any" name="ev_power" value="{{ i.power }}" class="form-control">
+              <input type="number" step="any" name="ev_power" value="{{ ev.power }}" class="form-control">
             </div>
-          </div>
-            <input type="text" name="name" value="{{ i.name }}" hidden/>
-            <input type="text" name="manufacturer" value="{{ i.manufacturer }}" hidden/>
-            <input type="number" name="year" value="{{ i.year }}" hidden/>
-
-            <br/>
-            {% if user %}
-            <form method="post" action="/details">
-                <input type="submit" value="Edit" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
-                <input type="submit" value="Delete" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
-                <input type="submit" value="Cancel" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
-            </form>
+            <input type="text" name="id" value="{{ ev.key.id() }}" hidden/>
+            {% if ev.reviews %}
+            <h4 class="col-md-12">Comments</h4>
+            {% for i in ev.reviews %}
+              <p class="col-md-12">{{ i.comment }}</p>
+            {% endfor %}
             {% endif %}
-          {% endfor %}
+            {% if user %}
+            <input type="submit" value="Edit" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
+            <input type="submit" value="Delete" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
+            <input type="submit" value="Cancel" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
+            {% endif %}
+          </div>
         </form>
       </main>
     </div>

@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>User login/logout</title>
+    <title>EV Review</title>
   </head>
   <body>
     <div class="container-fluid">
@@ -31,26 +31,33 @@
         </nav>
       </header>
       <main>
-        <div class="jumbotron">
-          <h1 class="display-4">Hello!</h1>
-          <p class="lead">This is a simple PaaS application used to interact with a database of Electric Vehicles</p>
-          <hr class="my-4">
-          {% if user %}
-          <p>{{ welcome }} {{ user.email() }} to the application</p>
-
-          <p>To add an EV <a href="/addev">click here</a></p>
-
-          <p>To review an EV <a href="/reviews">click here</a></p>
-
-          {% else %}
-          <p>Hello guest welcome to the application</p>
-          {% endif %}
-
-          <p>To search for an EV  <a href="/search">click here</a></p>
-
-          <p>To compare EVs <a href="/compare">click here</a></p>
-        </div>
-        <p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+        <h1>Review</h1>
+        <p>To review an EV select one from the drop down list and leave a comment and rating out of 10</p>
+        <form method="post" action="/reviews" class="form">
+          <fieldset>
+            Select a car to review:
+            <select name="ev" required>
+              <option disabled selected value> -- select an EV -- </option>
+              {% for i in q %}
+              <option value="{{ i.key.id() }}">{{ i.manufacturer }} {{ i.name }} {{ i.year }}</option>
+              {% endfor %}
+            </select>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label>Comment:</label>
+                <textarea name="comment" rows="8" cols="80" class="form-control" maxlength = "1000" required></textarea>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Rating:</label>
+                <input type="number" min="1" max="10" name="rating" step="any" class="form-control" required>
+              </div>
+            </div>
+            <input type="submit" value="Submit" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
+          </fieldset>
+        </form>
+        <form action="/addev" method="post">
+          <input type="submit" value="Cancel" name="button" class="btn btn-outline-dark btn-lg btn-block mt-2"/>
+        </form>
       </main>
     </div>
     <!-- JavaScript -->
