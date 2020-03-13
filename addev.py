@@ -32,9 +32,10 @@ class AddEv(webapp2.RequestHandler):
 
     def post(self):
         self.response.headers['Content-Type'] = 'text/html'
+
+        user = users.get_current_user()
+
         action = self.request.get('button')
-        # evs_key = ndb.Key('EV', 'default')
-        # evs = key.get()
 
         ev = EV()
 
@@ -48,19 +49,20 @@ class AddEv(webapp2.RequestHandler):
             ev.cost = float(self.request.get('ev_cost'))
             ev.power = float(self.request.get('ev_power'))
 
-            # ev.put()
-
-            result = False
-
             query = EV.query(ndb.AND(EV.manufacturer == ev.manufacturer, EV.name == ev.name, EV.year == ev.year))
 
-            for i in query:
-                result = True
+            if query.count() > 0:
+                error = 'Error: EV already exists!'
+                template_values = {
+                    'error' : error,
+                    'user': user
+                }
 
-            if result:
+                template = JINJA_ENVIRONMENT.get_template('addev.html')
+                self.response.write(template.render(template_values))
+                return
                 # error = 'EV already entered into datastore'
                 self.redirect('/addev')
-
             else:
                 ev.put()
                 self.redirect('/')

@@ -46,6 +46,16 @@ class Reviews(webapp2.RequestHandler):
 
             ev.reviews.append(new_review)
 
+            count = 0;
+            sum = 0;
+            average = 0.0;
+            for i in ev.reviews:
+                sum += i.rating
+                count += 1
+            average = (sum)/(count)
+
+            ev.rating = average
+
             ev.put()
             self.redirect('/')
 

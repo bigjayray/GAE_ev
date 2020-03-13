@@ -32,6 +32,9 @@
     </header>
     <main>
       <h2>Add an EV</h2>
+      {% if error %}
+      <p class="text-danger">{{ error }}</p>
+      {% endif %}
       <form method="post" action="/addev" class="form">
         <fieldset>
           <div class="form-row">
@@ -45,23 +48,23 @@
             </div>
             <div class="form-group col-md-6">
               <label>Year:</label>
-              <input type="number" step="any" name="ev_year" class="form-control" required>
+              <input type="number" step="any" name="ev_year" class="form-control" required min="0">
             </div>
             <div class="form-group col-md-6">
               <label>Battery size:</label>
-              <input type="number" step="any" name="ev_battery_size" class="form-control" required>
+              <input type="number" step="any" name="ev_battery_size" class="form-control" required min="0">
             </div>
             <div class="form-group col-md-6">
               <label>WLTP Range:</label>
-              <input type="number" step="any" name="ev_WLTP_Range" class="form-control" required>
+              <input type="number" step="any" name="ev_WLTP_Range" class="form-control" required min="0">
             </div>
             <div class="form-group col-md-6">
               <label>Cost:</label>
-              <input type="number" step="any" name="ev_cost" class="form-control" required>
+              <input type="number" step="any" name="ev_cost" class="form-control" required min="0">
             </div>
             <div class="form-group col-md-6">
               <label>Power:</label>
-              <input type="number" step="any" name="ev_power"  class="form-control"required>
+              <input type="number" step="any" name="ev_power"  class="form-control"required min="0">
             </div>
           </div>
           <input type="submit" value="Add" name="button" class="btn btn-outline-dark btn-lg btn-block"/>

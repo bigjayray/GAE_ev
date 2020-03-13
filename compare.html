@@ -58,13 +58,14 @@
             <th scope="col">WLTP Range</th>
             <th scope="col">Cost</th>
             <th scope="col">Power</th>
+            <th scope="col">Rating</th>
           </tr>
         </thead>
         <tbody>
           {% for ev in EVs %}
           <tr>
             <th scope="row">{{ loop.index }}</th>
-            <td>{{ ev.name }}</td>
+            <td><a href="/details?id={{ ev.key.id() }}">{{ ev.name }}</a></td>
             <td>{{ ev.manufacturer }}</td>
             <td>{{ ev.year }}</td>
             {% if ev.battery_size == max_battery_size %}
@@ -94,6 +95,17 @@
             <td class="text-danger">{{ ev.power }}</td>
             {% else %}
             <td>{{ ev.power }}</td>
+            {% endif %}
+            {% if ev.reviews %}
+              {% if ev.rating == max_rating %}
+              <td class="text-success">{{ ev.rating }}</td>
+              {% elif ev.rating == min_rating %}
+              <td class="text-danger">{{ ev.rating }}</td>
+              {% else %}
+              <td>{{ ev.rating }}</td>
+              {% endif %}
+            {% else %}
+            <td>None</td>
             {% endif %}
           </tr>
           {% endfor %}

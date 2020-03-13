@@ -23,9 +23,6 @@ class Compare(webapp2.RequestHandler):
 
         for i in q:
             ekey = i.key
-            print(ekey)
-            # ev = ekey.get()
-            # print(ev)
 
         template_values = {
             'user': user,
@@ -49,7 +46,8 @@ class Compare(webapp2.RequestHandler):
                 error = 'Error: Choose at least two evs'
                 template_values = {
                     'error' : error,
-                    'q' : q
+                    'q' : q,
+                    'user' : user
                 }
 
                 template = JINJA_ENVIRONMENT.get_template('compare.html')
@@ -69,6 +67,8 @@ class Compare(webapp2.RequestHandler):
             min_cost = 9223372036854775807
             max_power = 0
             min_power = 9223372036854775807
+            max_rating = 0
+            min_rating = 9223372036854775807
 
             for ev in EVs:
                 if max_battery_size < ev.battery_size:
@@ -87,6 +87,12 @@ class Compare(webapp2.RequestHandler):
                     max_power = ev.power
                 if min_power > ev.power:
                     min_power = ev.power
+                if ev.rating:
+                    if max_rating < ev.rating:
+                        max_rating = ev.rating
+                    if min_rating > ev.rating:
+                        min_rating = ev.rating
+
 
             template_values = {
             'user': user,
@@ -100,7 +106,9 @@ class Compare(webapp2.RequestHandler):
             'max_cost' : max_cost,
             'min_cost' : min_cost,
             'max_power' : max_power,
-            'min_power' : min_power
+            'min_power' : min_power,
+            'max_rating' : max_rating,
+            'min_rating' : min_rating
             }
 
             template = JINJA_ENVIRONMENT.get_template('compare.html')

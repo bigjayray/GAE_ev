@@ -11,3 +11,4 @@ class EV(ndb.Model):
     cost = ndb.FloatProperty(required=True)
     power = ndb.FloatProperty(required=True)
     reviews = ndb.StructuredProperty(Review, repeated=True)
+    rating = ndb.FloatProperty()

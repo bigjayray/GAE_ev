@@ -65,10 +65,10 @@
             <input type="text" name="id" value="{{ ev.key.id() }}" hidden/>
             {% if ev.reviews %}
             <h4 class="col-md-12">Comments</h4>
-            {% for i in ev.reviews %}
+            {% for i in ev.reviews|reverse %}
               <p class="col-md-12">{{ loop.index }}. {{ i.comment }}</p>
             {% endfor %}
-            <p class="h5">Average Rating: {{ average }}</p>
+            <p class="h5">Average Rating: {{ ev.rating }}</p>
             {% endif %}
             {% if user %}
             <input type="submit" value="Edit" name="button" class="btn btn-outline-dark btn-lg btn-block"/>
