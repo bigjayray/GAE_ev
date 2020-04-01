@@ -21,9 +21,6 @@ class Compare(webapp2.RequestHandler):
 
         q = EV.query()
 
-        for i in q:
-            ekey = i.key
-
         template_values = {
             'user': user,
             'q' : q

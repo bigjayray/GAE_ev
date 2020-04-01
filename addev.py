@@ -60,9 +60,6 @@ class AddEv(webapp2.RequestHandler):
 
                 template = JINJA_ENVIRONMENT.get_template('addev.html')
                 self.response.write(template.render(template_values))
-                return
-                # error = 'EV already entered into datastore'
-                self.redirect('/addev')
             else:
                 ev.put()
                 self.redirect('/')
