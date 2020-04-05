@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
 
+# MyUser class
 class MyUser(ndb.Model):
-    # email address of this user
+    # A model for representing an individual user
     email_address = ndb.StringProperty()

@@ -1,6 +1,7 @@
 from google.appengine.ext import ndb
 from review import Review
 
+# EV class
 class EV(ndb.Model):
     # A model for representing an individual an ev
     name = ndb.StringProperty(required=True)

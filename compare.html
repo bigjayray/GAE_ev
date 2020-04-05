@@ -9,7 +9,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- style sheet -->
+  <link rel="stylesheet" href="/stylesheet/style.css">
 
   <title>Compare EVs</title>
 </head>
@@ -17,16 +18,16 @@
   <div class="container-fluid">
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">EV</a>
+        <a class="navbar-brand" href="/">Elon's Dream</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-item nav-link" href="/search">Search EV</a>
+            <a class="nav-item nav-link" href="/compare">Compare EV</a>
             {% if user %}
             <a class="nav-item nav-link" href="/addev">Add EV</a>
-            <a class="nav-item nav-link" href="/compare">Compare EV</a>
             <a class="nav-item nav-link" href="/reviews">Review EV</a>
             {% endif %}
           </div>
@@ -36,10 +37,16 @@
     <main>
       <h2>Compare EVs</h2>
       {% if error %}
-      <p class="text-danger">{{ error }}</p>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> You need to selected atleast two evs to compare.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       {% endif %}
       <form method="post" action="/compare">
         <select class="selectpicker" multiple data-live-search="true" name="evs" required>
+          <!-- loops through q to display all evs to be compare  -->
           {% for i in q %}
           <option value="{{ i.key.id() }}">{{ i.manufacturer }} {{ i.name }} {{ i.year }}</option>
           {% endfor %}
@@ -62,6 +69,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- loops through ev to display compared evs -->
           {% for ev in EVs %}
           <tr>
             <th scope="row">{{ loop.index }}</th>

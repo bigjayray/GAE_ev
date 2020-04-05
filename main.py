@@ -1,3 +1,4 @@
+# imports
 import webapp2
 import jinja2
 from google.appengine.api import users
@@ -18,7 +19,9 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
 )
 
+# MainPage class
 class MainPage(webapp2.RequestHandler):
+    # get method called on page when page is instantiated
     def get(self):
         self.response.headers['Content-Typ'] = 'text/html'
 
@@ -27,8 +30,10 @@ class MainPage(webapp2.RequestHandler):
         welcome = 'Welcome back'
         myuser = None
 
+        # get current user
         user = users.get_current_user()
 
+        # selection statement for user
         if user:
             url = users.create_logout_url(self.request.uri)
             url_string = 'logout'
@@ -44,6 +49,7 @@ class MainPage(webapp2.RequestHandler):
             url = users.create_login_url(self.request.uri)
             url_string = 'login'
 
+        # values to be rendered to the main.html page
         template_values = {
             'url' : url,
             'url_string' : url_string,

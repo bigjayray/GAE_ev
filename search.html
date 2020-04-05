@@ -8,22 +8,26 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <!-- style sheet -->
+    <link rel="stylesheet" href="/stylesheet/style.css">
+
     <title>Search EV</title>
   </head>
   <body>
     <div class="container-fluid">
       <header>
+        <!-- navigation bar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="/">EV</a>
+          <a class="navbar-brand" href="/">Elon's Dream</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="/search">Search EV</a>
+              <a class="nav-item nav-link" href="/compare">Compare EV</a>
               {% if user %}
               <a class="nav-item nav-link" href="/addev">Add EV</a>
-              <a class="nav-item nav-link" href="/compare">Compare EV</a>
               <a class="nav-item nav-link" href="/reviews">Review EV</a>
               {% endif %}
             </div>
@@ -36,11 +40,11 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label>Name:</label>
-              <input type="text" name="ev_name" class="form-control">
+              <input type="text" name="ev_name" class="form-control" placeholder="Name">
             </div>
             <div class="form-group col-md-6">
               <label>Manufacturer:</label>
-              <input type="text" name="ev_manufacturer" class="form-control">
+              <input type="text" name="ev_manufacturer" class="form-control" placeholder="Manufacturer">
             </div>
             <div class="form-group col-md-4">
               <label>Year:</label>
@@ -70,8 +74,8 @@
             <input type="submit" value="Search" name="button" class="btn btn-outline-dark col-md-6"/>
             <input type="submit" value="Cancel" name="button" class="btn btn-outline-dark col-md-6"/>
           </div>
-
         </form>
+        <!-- loops through query to display result -->
         {% if total_query %}
         <h4 class="mt-2">Search Results:</h4>
         {% for i in total_query %}

@@ -1,3 +1,4 @@
+# imports
 import webapp2
 import jinja2
 from google.appengine.api import users
@@ -15,13 +16,16 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True
 )
 
+# Search Class
 class Search(webapp2.RequestHandler):
+    # get method called on page when page is instantiated
     def get(self):
         self.response.headers['Content-Type'] = 'text/html'
 
+        # gets current user
         user = users.get_current_user()
 
-
+        # values to be rendered to the search.html page
         template_values = {
             'user': user
         }
@@ -29,12 +33,17 @@ class Search(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('search.html')
         self.response.write(template.render(template_values))
 
+    # called when you submit a web form
     def post(self):
         self.response.headers['Content-Type'] = 'text/html'
+
+        # gets current user
         user = users.get_current_user()
 
+        # get value of button clicked
         action = self.request.get('button')
 
+        # selection statement for button
         if action == 'Search':
             name = self.request.get('ev_name')
             manufacturer = self.request.get('ev_manufacturer')
@@ -49,9 +58,11 @@ class Search(webapp2.RequestHandler):
             power_upper = self.request.get('ev_power_upper')
             power_lower = self.request.get('ev_power_lower')
 
+            # querys ev
             query1 = EV.query().fetch(keys_only=True)
             query = EV.query().fetch(keys_only=True)
 
+            # selection statement values from form
             if name:
                 query2 = EV.query(EV.name == name).fetch(keys_only=True)
                 query1 = (set(query1).intersection(query2))
@@ -90,8 +101,10 @@ class Search(webapp2.RequestHandler):
                 query1 = (set(query1).intersection(query2))
 
 
+            # query returns a list containing entity objects
             total_query = ndb.get_multi(set(query).intersection(query1))
 
+            # values to be rendered to the search.html page
             template_values = {
                 'user': user,
                 'total_query' : total_query

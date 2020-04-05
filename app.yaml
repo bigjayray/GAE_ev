@@ -7,5 +7,9 @@ libraries:
   version: latest
 
 handlers:
+- url: /stylesheet
+  static_dir: static
+- url: /images
+  static_dir: myimgs
 - url: /.*
   script: main.app
