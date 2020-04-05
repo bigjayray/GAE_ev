@@ -45,6 +45,9 @@ class Details(webapp2.RequestHandler):
     def post(self):
         self.response.headers['Content-Type'] = 'text/html'
 
+        # gets current user
+        user = users.get_current_user()
+
         # get value of button clicked
         action = self.request.get('button')
 
@@ -65,11 +68,24 @@ class Details(webapp2.RequestHandler):
             ev.cost = float(self.request.get('ev_cost'))
             ev.power = float(self.request.get('ev_power'))
 
-            # adds ev to datastore
-            ev.put()
+            # querys ev to find duplicate ev
+            query = EV.query(ndb.AND(EV.manufacturer == ev.manufacturer, EV.name == ev.name, EV.year == ev.year))
 
-            # redirects back to home page
-            self.redirect('/')
+            # selection statement for if query count is above 0
+            if query.count() > 0:
+                error = 'Error: EV already exists!'
+                template_values = {
+                    'user': user,
+                    'error' : error,
+                    'ev' : ev
+                }
+
+                template = JINJA_ENVIRONMENT.get_template('details.html')
+                self.response.write(template.render(template_values))
+            else:
+                # adds ev to datastore
+                ev.put()
+                self.redirect('/')
 
         elif action == 'Delete':
             id = self.request.get('id')

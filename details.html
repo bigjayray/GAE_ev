@@ -10,7 +10,7 @@
 
     <!-- style sheet -->
     <link rel="stylesheet" href="/stylesheet/style.css">
-    
+
     <title>EV Details</title>
   </head>
   <body>
@@ -35,6 +35,14 @@
       </header>
       <main>
         <h2>Details</h2>
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error!</strong> Ev already exists.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endif %}
         <form method="post" action="/details" class="form">
           <div class="form-row">
             <div class="form-group col-md-6">
